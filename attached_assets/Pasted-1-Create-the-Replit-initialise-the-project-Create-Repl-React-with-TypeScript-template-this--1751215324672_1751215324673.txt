@@ -1,0 +1,409 @@
+1️⃣ Create the Replit & initialise the project
+Create Repl → “React with TypeScript” template (this boots Vite for you).
+
+Wait for the workspace to open; a live dev server will auto-start at the right-hand preview.
+
+If you accidentally chose a blank Node Repl, run:
+
+bash
+Copy
+Edit
+▶ shell: npm create vite@latest aionion-imf -- --template react-ts
+▶ shell: cd aionion-imf && npm install
+2️⃣ Install helpers for routing, animations & Tailwind
+bash
+Copy
+Edit
+▶ shell: npm install react-router-dom@^6 framer-motion@^11
+▶ shell: npm install -D tailwindcss postcss autoprefixer
+▶ shell: npx tailwindcss init -p
+Tailwind setup
+tailwind.config.cjs
+
+js
+Copy
+Edit
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        redBrand:  "#ec202a",
+        redTint20:"#f9d7db",
+        redTint10:"#fdeced",
+        blueBrand:"#094e8f",
+        blueTint20:"#d9e5fa",
+        blueTint10:"#edf2fd",
+        plum:     "#a875ff",
+        mint:     "#4cd6b7",
+        n95:      "#f8f9fc",
+        n90:      "#f1f4fa",
+        n70:      "#dadfe7",
+        n20:      "#4b5563",
+        n5:       "#1f2937",
+      },
+      borderRadius:{ card:"1rem" },
+    },
+  },
+  plugins: [],
+};
+src/index.css
+
+css
+Copy
+Edit
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html { scroll-behavior:smooth; } /* nice nav jumps */
+3️⃣ Wire basic routing & animated transitions
+src/main.tsx (unchanged except BrowserRouter):
+
+tsx
+Copy
+Edit
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <BrowserRouter><App /></BrowserRouter>
+);
+src/App.tsx
+
+tsx
+Copy
+Edit
+import { Routes, Route, useLocation } from "react-router-dom";
+import { Navbar } from "./components/Navbar";
+import { AnimatePresence } from "framer-motion";
+import Home from "./pages/Home";
+import Products from "./pages/Products";
+import Renewals from "./pages/Renewals";
+import Claims from "./pages/Claims";
+import Knowledge from "./pages/Knowledge";
+import Contact from "./pages/Contact";
+
+const App = () => {
+  const location = useLocation();
+  return (
+    <div className="bg-n95 min-h-screen flex flex-col">
+      <Navbar />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/"          element={<Home     />} />
+          <Route path="/products"  element={<Products />} />
+          <Route path="/renewals"  element={<Renewals />} />
+          <Route path="/claims"    element={<Claims   />} />
+          <Route path="/knowledge" element={<Knowledge/>} />
+          <Route path="/contact"   element={<Contact  />} />
+        </Routes>
+      </AnimatePresence>
+    </div>
+  );
+};
+export default App;
+src/components/Navbar.tsx
+
+tsx
+Copy
+Edit
+import { Link, NavLink } from "react-router-dom";
+const items = [
+  { to:"/",          label:"Home"     },
+  { to:"/products",  label:"Products"},
+  { to:"/renewals",  label:"Renewals"},
+  { to:"/claims",    label:"Claims"  },
+  { to:"/knowledge", label:"Knowledge Centre"},
+  { to:"/contact",   label:"Contact"}
+];
+export const Navbar = () => (
+  <header className="bg-white shadow sticky top-0 z-30">
+    <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+      <Link to="/" className="text-blueBrand font-bold text-lg">
+        Aionion IMF
+      </Link>
+      <ul className="flex gap-4">
+        {items.map(({to,label})=>(
+          <li key={to}>
+            <NavLink
+              to={to}
+              className={({isActive})=>
+                `px-3 py-2 rounded-md text-sm font-medium ${
+                  isActive?"bg-blueTint20 text-blueBrand":"text-n20 hover:bg-blueTint10"
+                }`
+              }>
+              {label}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </header>
+);
+4️⃣ Create page stubs with Framer-Motion fade-in
+Make a src/pages folder and add one file per page.
+Example: src/pages/Home.tsx
+
+tsx
+Copy
+Edit
+import { motion } from "framer-motion";
+
+const Home = () => (
+  <motion.main
+    className="max-w-7xl mx-auto p-6"
+    initial={{ opacity:0, y:20 }}
+    animate={{ opacity:1, y:0 }}
+    exit={{ opacity:0, y:-20 }}
+    transition={{ duration:0.25 }}
+  >
+    <section className="text-center space-y-4">
+      <h1 className="text-4xl font-bold text-n5">
+        Welcome to Aionion Insurance Marketing Pvt. Ltd.
+      </h1>
+      <p className="text-lg text-n20">
+        Assisting + Comparison + Commitment = <span className="text-redBrand font-semibold">Us</span>
+      </p>
+      <p className="max-w-2xl mx-auto">
+        At Aionion IMF we make insurance simple, accessible and effective. As an IRDAI-registered Insurance Marketing Firm, we partner with leading insurers to offer Term, Health, General and SME solutions tailored to you.
+      </p>
+      <a href="/products" className="inline-block bg-redBrand text-white px-6 py-3 rounded-card shadow hover:bg-redTint10 hover:text-redBrand transition">
+        Explore Our Products
+      </a>
+    </section>
+  </motion.main>
+);
+export default Home;
+Duplicate & tweak for other pages — paste the bullet-point content you provided. Use Coming Soon… for any section you haven’t fleshed out yet.
+
+Minimal “Coming Soon” template:
+
+tsx
+Copy
+Edit
+import { motion } from "framer-motion";
+const Products = () => (
+  <motion.main className="max-w-7xl mx-auto p-6"
+    initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
+    <h1 className="text-3xl font-bold mb-4 text-n5">Products</h1>
+    <p className="text-n20">Content coming soon…</p>
+  </motion.main>
+);
+export default Products;
+5️⃣ Auto-save & preview
+Replit hot-reloads; every file save triggers a rebuild and the right-pane URL refreshes.
+
+Share demo → click “Share” → “Live link” to give clients a read-only preview.
+
+6️⃣ Nice-to-Have enhancements
+Feature	Quick addition
+Hero gradient	className="bg-gradient-to-r from-redTint10 via-white to-blueTint10" on the hero section
+Illustrations	Drop SVGs inside public/illustrations and embed with <img className="mx-auto w-72" src="/illustrations/claim.svg" />
+Footer	Create components/Footer.tsx; place <Footer/> just before </div> in App.tsx
+SEO & meta	Edit index.html → add <title> + meta tags
+
+🎉 You now have:
+Tailwind design tokens for your brand palette
+
+Animated page transitions à la PlumHQ
+
+Clean React-TSX folder structure ready for real copy & images
+
+When you’re happy, push to GitHub & one-click deploy on Vercel (Vercel auto-detects Vite config). Need guidance on that last mile, or specific component mock-ups? Just let me know!
+
+
+
+
+
+
+
+
+You said:
+ok give me the pages data I need to give it
+
+
+ChatGPT said:
+
+Thought for 18 seconds
+Below is a single TypeScript file that holds all the copy you supplied—already broken into page-wise objects.
+
+Create src/data/siteContent.ts in Replit.
+
+Paste everything between the fences.
+
+In any page component, do:
+
+tsx
+Copy
+Edit
+import { siteContent } from "../data/siteContent";
+const { hero, services } = siteContent.home;
+…and render as you like.
+
+ts
+Copy
+Edit
+/*  src/data/siteContent.ts
+    Central place for every line of on-site copy. Extend or tweak here. */
+
+export const siteContent = {
+  /* ─────────────────────────── Home ─────────────────────────── */
+  home: {
+    hero: {
+      title: "Welcome to Aionion Insurance Marketing Pvt. Ltd.",
+      tagline: "Assisting + Comparison + Commitment = Us",
+      paragraph:
+        "At Aionion Insurance Marketing Pvt. Ltd. we make insurance simple, accessible and effective. " +
+        "As an IRDAI-registered Insurance Marketing Firm, we partner with leading insurers to offer " +
+        "Term, Health, General and SME insurance solutions tailored to your unique needs.",
+      cta: "Explore Our Products",
+    },
+
+    services: {
+      heading: "Explore Our Services",
+      list: [
+        "Term Insurance Plans",
+        "Health Insurance",
+        "General Insurance (Motor, Travel, Property)",
+        "SME & Corporate Insurance",
+      ],
+    },
+
+    why: {
+      heading: "Why Aionion?",
+      bullets: [
+        "Multi-Insurer Platform",
+        "Personalised Advice",
+        "Transparent Process",
+        "Prompt Claim Assistance",
+        "End-to-End Policy Management",
+      ],
+    },
+  },
+
+  /* ───────────────────────── Products ───────────────────────── */
+  products: {
+    pageTitle: "Our Insurance Solutions",
+    intro:
+      "We bring you a wide range of insurance products from top insurers under one roof.",
+    categories: [
+      {
+        name: "Term Insurance",
+        description: "Pure protection plans that secure your family’s future.",
+        plans: ["Pure Term Insurance"],
+      },
+      {
+        name: "Health Insurance",
+        description:
+          "Comprehensive medical coverages for individuals, families and senior citizens.",
+        plans: [
+          "Individual & Family Floater Policies",
+          "Critical Illness Cover",
+          "Top-Up & Super Top-Up Plans",
+          "Senior Citizen Health Insurance",
+        ],
+      },
+      {
+        name: "General Insurance",
+        description: "Protect your assets and journeys.",
+        plans: ["Motor Insurance (Car & Two-Wheeler)", "Travel Insurance"],
+      },
+      {
+        name: "SME & Corporate Insurance",
+        description: "Tailored risk solutions for businesses of every size.",
+        plans: [
+          "Group Mediclaim",
+          "Group Term Life",
+          "Home Insurance",
+          "Fire & Marine Insurance",
+          "Workmen Compensation",
+          "Cyber Insurance",
+          "Professional Indemnity Insurance",
+          "Contractors All-Risk Policy",
+          "Erection All-Risk Policy",
+          "Marine Insurance",
+        ],
+      },
+    ],
+  },
+
+  /* ───────────────────────── Renewals ───────────────────────── */
+  renewals: {
+    pageTitle: "Easy Renewals with Aionion",
+    intro:
+      "Never miss a renewal with our automated reminders and seamless assistance.",
+    steps: [
+      { step: "1", text: "Enter Policy Details" },
+      { step: "2", text: "Review Premium & Benefits" },
+      { step: "3", text: "Pay Online Securely" },
+    ],
+    note:
+      "Whether your policy is with us or another provider, we make renewals hassle-free and timely.",
+  },
+
+  /* ─────────────────────────  Claims  ───────────────────────── */
+  claims: {
+    pageTitle: "Claim Support You Can Rely On",
+    intro: "Filing an insurance claim can be stressful. We make it easy.",
+    services: [
+      "Documentation Support",
+      "Insurer Coordination",
+      "Claim Filing Guidance",
+      "Real-Time Status Updates",
+      "Dispute Resolution",
+    ],
+    closing: "We stay with you until your claim is settled.",
+  },
+
+  /* ─────────────────────── Knowledge Centre ─────────────────── */
+  knowledge: {
+    pageTitle: "Learn and Stay Informed",
+    categories: [
+      "Insurance Basics",
+      "Product Comparison Guides",
+      "Tax Benefits of Insurance",
+      "IRDAI Updates & Guidelines",
+      "Frequently Asked Questions (FAQs)",
+    ],
+  },
+
+  /* ───────────────────────── Contact ────────────────────────── */
+  contact: {
+    pageTitle: "We’re Here to Help",
+    addressLines: [
+      "Aionion Insurance Marketing Pvt. Ltd.",
+      "No 5/2 Hanumantha Road, Royapettah",
+    ],
+    email: "imf@aioniongroup.com",
+    businessHours: "Monday – Saturday · 9:00 AM – 6:00 PM",
+  },
+} as const;
+How to render quickly
+tsx
+Copy
+Edit
+/* example inside Products.tsx */
+import { siteContent } from "../data/siteContent";
+const { pageTitle, intro, categories } = siteContent.products;
+
+return (
+  <motion.main ...>
+    <h1>{pageTitle}</h1>
+    <p className="mb-6">{intro}</p>
+
+    {categories.map(({ name, description, plans }) => (
+      <section key={name} className="mb-10">
+        <h2 className="text-2xl font-bold text-blueBrand mb-2">{name}</h2>
+        <p className="mb-3">{description}</p>
+        <ul className="list-disc list-inside space-y-1">
+          {plans.map(p => <li key={p}>{p}</li>)}
+        </ul>
+      </section>
+    ))}
+  </motion.main>
+);
+That’s it—your pages now have real copy; swap or extend lines in siteContent.ts and all components update automatically. Happy building!

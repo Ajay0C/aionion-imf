@@ -1,0 +1,1 @@
+All data is loaded from `src/data/siteContent.ts` and is fully client-side. No API or server is required.

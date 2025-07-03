@@ -1,0 +1,1 @@
+The server/ folder and all backend code are not needed for static deployment. You can delete the server/ directory before uploading to Hostinger.

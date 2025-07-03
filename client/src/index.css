@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(31, 6%, 11%);
+  --muted: hsl(210, 40%, 98%);
+  --muted-foreground: hsl(215, 16%, 47%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(31, 6%, 11%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(31, 6%, 11%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(210, 40%, 96%);
+  --secondary-foreground: hsl(222, 84%, 5%);
+  --accent: hsl(210, 40%, 96%);
+  --accent-foreground: hsl(222, 84%, 5%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(222, 84%, 5%);
+  --radius: 0.5rem;
+  
+  /* Custom Aionion Brand Colors */
+  --red-brand: hsl(355, 84%, 54%);
+  --red-tint-20: hsl(355, 84%, 91%);
+  --red-tint-10: hsl(355, 84%, 96%);
+  --blue-brand: hsl(209, 91%, 30%);
+  --blue-tint-20: hsl(209, 91%, 91%);
+  --blue-tint-10: hsl(209, 91%, 96%);
+  --plum: hsl(264, 100%, 73%);
+  --mint: hsl(168, 60%, 57%);
+  --n95: hsl(218, 27%, 98%);
+  --n90: hsl(218, 27%, 95%);
+  --n70: hsl(218, 27%, 87%);
+  --n20: hsl(215, 14%, 34%);
+  --n5: hsl(217, 19%, 12%);
+}
+
+.dark {
+  --background: hsl(217, 19%, 12%);
+  --foreground: hsl(210, 40%, 98%);
+  --muted: hsl(217, 19%, 18%);
+  --muted-foreground: hsl(215, 14%, 64%);
+  --popover: hsl(217, 19%, 12%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --card: hsl(217, 19%, 12%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --border: hsl(217, 19%, 18%);
+  --input: hsl(217, 19%, 18%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(217, 19%, 18%);
+  --secondary-foreground: hsl(210, 40%, 98%);
+  --accent: hsl(217, 19%, 18%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 62%, 30%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(212, 12%, 84%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  
+  .glassmorphism-dark {
+    background: rgba(30, 30, 30, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .gradient-hero {
+    background: linear-gradient(135deg, hsl(209, 91%, 96%) 0%, hsl(0, 0%, 100%) 50%, hsl(355, 84%, 96%) 100%);
+  }
+  
+  .gradient-hero-dark {
+    background: linear-gradient(135deg, hsl(217, 19%, 12%) 0%, hsl(217, 19%, 22%) 50%, hsl(217, 19%, 12%) 100%);
+  }
+  
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  }
+  
+  .btn-primary {
+    background: linear-gradient(135deg, hsl(355, 84%, 54%) 0%, hsl(209, 91%, 30%) 100%);
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px hsla(355, 84%, 54%, 0.3);
+  }
+  
+  .page-content {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.4s ease;
+  }
+  
+  .page-content.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  
+  .mobile-menu {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .mobile-menu.open {
+    transform: translateX(0);
+  }
+}
+
+@layer utilities {
+  .text-red-brand {
+    color: hsl(355, 84%, 54%);
+  }
+  
+  .text-blue-brand {
+    color: hsl(209, 91%, 30%);
+  }
+  
+  .bg-red-brand {
+    background-color: hsl(355, 84%, 54%);
+  }
+  
+  .bg-blue-brand {
+    background-color: hsl(209, 91%, 30%);
+  }
+  
+  .bg-plum {
+    background-color: hsl(264, 100%, 73%);
+  }
+  
+  .bg-mint {
+    background-color: hsl(168, 60%, 57%);
+  }
+  
+  .bg-n95 {
+    background-color: hsl(218, 27%, 98%);
+  }
+  
+  .bg-n5 {
+    background-color: hsl(217, 19%, 12%);
+  }
+  
+  .text-n5 {
+    color: hsl(217, 19%, 12%);
+  }
+  
+  .text-n20 {
+    color: hsl(215, 14%, 34%);
+  }
+  
+  .border-n70 {
+    border-color: hsl(218, 27%, 87%);
+  }
+  
+  .rounded-card {
+    border-radius: 1rem;
+  }
+}
