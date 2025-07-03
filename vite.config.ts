@@ -4,18 +4,19 @@ import * as path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
 export default defineConfig({
-  base: '/aionion-imf/', // Set base for GitHub Pages deployment
+  base: '/', // Use '/' for Vercel or custom domain. Change to '/aionion-imf/' only for GitHub Pages.
   plugins: [
     react(),
     runtimeErrorOverlay(),
-    ...(process.env.NODE_ENV !== "production" &&
-    process.env.REPL_ID !== undefined
-      ? [
-          await import("@replit/vite-plugin-cartographer").then((m) =>
-            m.cartographer(),
-          ),
-        ]
-      : []),
+    // Remove await import for Vercel compatibility (no top-level await in config)
+    // ...(process.env.NODE_ENV !== "production" &&
+    // process.env.REPL_ID !== undefined
+    //   ? [
+    //       await import("@replit/vite-plugin-cartographer").then((m) =>
+    //         m.cartographer(),
+    //       ),
+    //     ]
+    //   : []),
   ],
   resolve: {
     alias: {
@@ -29,8 +30,6 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
   },
-
-
   server: {
     fs: {
       strict: true,
