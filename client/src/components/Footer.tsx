@@ -20,7 +20,7 @@ export function Footer() {
               Making insurance simple, accessible and effective for everyone. Your trusted IRDAI-registered Insurance Marketing Firm.
             </p>
             <p className="text-gray-400">
-              Assisting + Comparison + Commitment = <span className="text-red-brand font-semibold">Us</span>
+              	Advice + Access + Assurance = <span className="text-red-brand font-semibold">Aionion</span>
             </p>
           </div>
           

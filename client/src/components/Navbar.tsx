@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTheme } from "./ThemeProvider";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import aionionLogo from "@assets/ 01 Logo_1751215870950.jpg";
+import aionionLogo from "@assets/ 01 Logo_1751215843230.png";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -29,10 +29,10 @@ export function Navbar() {
               <img 
                 src={aionionLogo} 
                 alt="Aionion Logo" 
-                className="w-10 h-6 object-contain"
+                className="w-20 h-12 object-contain"
               />
               <span className="ml-3 text-blue-brand dark:text-blue-400 font-bold text-lg">
-                Aionion IMF
+                Aionion Insurance
               </span>
             </div>
           </Link>

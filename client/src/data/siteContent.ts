@@ -6,7 +6,7 @@ export const siteContent = {
   home: {
     hero: {
       title: "Welcome to Aionion Insurance Marketing Pvt. Ltd.",
-      tagline: "Assisting + Comparison + Commitment = Us",
+      tagline: "Advice + Access + Assurance = Aionion",
       paragraph:
         "At Aionion Insurance Marketing Pvt. Ltd. we make insurance simple, accessible and effective. " +
         "As an IRDAI-registered Insurance Marketing Firm, we partner with leading insurers to offer " +
